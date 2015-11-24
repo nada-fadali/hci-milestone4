@@ -39,6 +39,20 @@ for (var i = 0; i < html.length; i++) {
     var input = '<input type="text" value="' + html[i] 
                 + '" style = "width: ' + inputWidth 
                 + 'em; background-color: ' + htmlBg + '">';
+
+    if (i < css.length) {
+        inputWidth = css[i].length / 2 + 0.85;
+        input += '<input type="text" value="' + css[i] 
+                + '" style = "width: ' + inputWidth 
+                + 'em; background-color: ' + cssBg + '">';
+    };
+
+    if (i < js.length) {
+        inputWidth = js[i].length / 2 + 0.85;
+        input += '<input type="text" value="' + js[i] 
+                + '" style = "width: ' + inputWidth 
+                + 'em; background-color: ' + jsBg + '">';
+    };
     
     $('#r'+i).append(input);
 };  
