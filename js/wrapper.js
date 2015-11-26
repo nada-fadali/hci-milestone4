@@ -6,6 +6,11 @@ var html = [
     '</head>',
     '<body>',
     '   <h1> Hello World! </h1>',
+    '   <div>',
+    '       <p>',
+    '           This is a sample paragraph inside a div with a class container',
+    '       </p>',
+    '   </div>',
     '</body>',
     '</html>'
 ];
@@ -13,6 +18,12 @@ var html = [
 var css = [
     'h1{',
     '   color: red;',
+    '}',
+    '.container{',
+    '   text-align: center;',
+    '   font-size: 10px;',
+    '   border: none;',
+    '   float: left;',
     '}'
 ];
 
@@ -20,7 +31,11 @@ var js = [
     'function hello(){',
     '   var msg = "hello world!";',
     '   alert("Message: " + msg)',
-    '}'
+    '}',
+    ' ',
+    'var x = 2;',
+    'var y = 3;',
+    'console.log(x+y)'
 ];
 
 // console.log($('#r1').length); // == 0 doesn't exists
