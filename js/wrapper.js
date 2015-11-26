@@ -8,7 +8,8 @@ var html = [
     '   <h1> Hello World! </h1>',
     '   <div>',
     '       <p>',
-    '           This is a sample paragraph inside a div with a class container',
+    '           This is a sample paragraph inside a',
+    ' div with a class container',
     '       </p>',
     '   </div>',
     '</body>',
@@ -38,36 +39,43 @@ var js = [
     'console.log(x+y)'
 ];
 
-// console.log($('#r1').length); // == 0 doesn't exists
-
 var htmlBg = '#62A3EE',
     cssBg =  '#FF73B1', //FFC361
     jsBg = '#64AD82';
 
 
+// wrap filler content
 for (var i = 0; i < html.length; i++) {
-    $('#wrapper').append($("<div>", {class: "row", id:"r"+i}));
-        
-    console.log(html[i].length);
-
-    var inputWidth = html[i].length / 2 + 0.85; 
-    var input = '<input type="text" value="' + html[i] 
-                + '" style = "width: ' + inputWidth 
-                + 'em; background-color: ' + htmlBg + '">';
+    wrap('html', i);
 
     if (i < css.length) {
-        inputWidth = css[i].length / 2 + 0.85;
-        input += '<input type="text" value="' + css[i] 
-                + '" style = "width: ' + inputWidth 
-                + 'em; background-color: ' + cssBg + '">';
+        wrap('css', i);
     };
 
     if (i < js.length) {
-        inputWidth = js[i].length / 2 + 0.85;
-        input += '<input type="text" value="' + js[i] 
-                + '" style = "width: ' + inputWidth 
-                + 'em; background-color: ' + jsBg + '">';
+        wrap('js', i);
     };
-    
-    $('#r'+i).append(input);
 };  
+
+// detect input tag changes
+
+
+function wrap(type, i){
+    var arr, color;
+    if (type === 'html') 
+        {arr = html; color = htmlBg;}
+    else if (type === 'css') 
+        {arr = css; color = cssBg;}
+    else 
+        {arr = js; color = jsBg;}
+
+    var inputWidth = arr[i].length / 2 + 0.85; 
+    var input = '<input type="text" value="' + arr[i] 
+                + '" style = "width: ' + inputWidth 
+                + 'em; background-color: ' + color + '">';
+
+    $('#'+type+'wrapper').append($("<div>", {class: "row", id:type+"r"+i}));
+    $('#'+type+'r'+i).append(input);
+}
+
+// console.log($('#r1').length); // == 0 doesn't exists
