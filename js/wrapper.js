@@ -115,6 +115,16 @@ $(document).on('keyup', 'input[type="text"]', function(ele) {
         $(this).css("width", inputWidth+"em");
 
         // update value in the array
+        var rowToEdit = parseInt($(this).parent().attr('id').substr(1));
+        if ($(this).attr('class') === 'html'){
+            html[rowToEdit] = $(this).val();
+        }
+        else if ($(this).attr('class') === 'css'){
+            css[rowToEdit] = $(this).val();
+        }
+        else if ($(this).attr('class') === 'js'){
+            js[rowToEdit] = $(this).val();
+        }
     }
 });
 
