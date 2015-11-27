@@ -29,8 +29,8 @@ var css = [
 
 var js = [
     'function hello(){',
-    '   var msg = "hello world!";',
-    '   alert("Message: " + msg)',
+    '   var msg = hello world!;',
+    '   alert(Message:  + msg)',
     '}',
     ' ',
     'var x = 2;',
@@ -38,35 +38,54 @@ var js = [
     'console.log(x+y)'
 ];
 
-for (var i = 0; i < html.length; i++) {
+wrap();
 
-    var inputWidth = html[i].length / 2 + 0.85; 
-    var input = '<input type="text" class="html" value="' + html[i] 
-                + '" style = "width: ' + inputWidth + 'em;">';
+function wrap()
+{
+    $('#wrapper').html('');
+    for (var i = 0; i < html.length; i++) {
 
-    if (i < css.length) {
-        inputWidth = css[i].length / 2 + 0.85;
-        input += '<input type="text" class="css" value="' + css[i] 
-                + '" style = "width: ' + inputWidth + 'em;">';
-    };
+        var inputWidth = html[i].length / 2 + 0.85; 
+        var input = '<input type="text" class="html" value="' + html[i] 
+                    + '" style = "width: ' + inputWidth + 'em;">';
 
-    if (i < js.length) {
-        inputWidth = js[i].length / 2 + 0.85;
-        input += '<input type="text" class="js" value="' + js[i] 
-                + '" style = "width: ' + inputWidth + 'em;">';
-    };
+        if (i < css.length) {
+            inputWidth = css[i].length / 2 + 0.85;
+            input += '<input type="text" class="css" value="' + css[i] 
+                    + '" style = "width: ' + inputWidth + 'em;">';
+        };
 
-    $('#wrapper').append($("<div>", {class: "row", id:"r"+i}));
-    $('#r'+i).append(input);
-};  
+        if (i < js.length) {
+            inputWidth = js[i].length / 2 + 0.85;
+            input += '<input type="text" class="js" value="' + js[i] 
+                    + '" style = "width: ' + inputWidth + 'em;">';
+        };
 
+        $('#wrapper').append($("<div>", {class: "row", id:"r"+i}));
+        $('#r'+i).append(input);
+    }; 
+} 
 
+// text editor
 $(document).on('keyup', 'input[type="text"]', function(ele) {
-    
     // if enter key is pressed
     // create input element below this one
     if (ele.keyCode === 13){
+        var addToRow = parseInt($(this).parent().attr('id').substr(1)) + 1;
 
+        if ($(this).attr('class') === 'html'){
+            html.splice(addToRow, 0, '');
+            
+        }
+        else if ($(this).attr('class') === 'css'){
+            css.splice(addToRow, 0, '');
+
+        }
+        else if ($(this).attr('class') === 'js'){
+            js.splice(addToRow, 0, '');
+        }
+        
+        wrap();
     }
 
     // else if delete key is pressed and this element is empty and not first line, delete it
