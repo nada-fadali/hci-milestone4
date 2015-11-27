@@ -89,25 +89,22 @@ $(document).on('keyup', 'input[type="text"]', function(ele) {
     }
 
     // else if delete key is pressed and this element is empty and not first line, delete it
-    else if (ele.keyCode === 8 && $(this).val().length === 0 && $(this).parent().attr('id') !== 'r0'){
-
-        // if the row is empty, adjust rows numbering
-        if ($(this).parent().children().length === 1){
-            var rowToDeleteIndex = $(this).parent().attr('id').substr(1);
-            var nextLines = $(this).parent().nextAll();
-
-            for (var i = 0; i < nextLines.length; i++) {
-                $(nextLines[i]).attr('id', 'r'+rowToDeleteIndex++);
-            };
-
-            $(this).parent().remove();
+    else if (ele.keyCode === 8 && $(this).val().length === 0){
+        var rowToDelete = parseInt($(this).parent().attr('id').substr(1));
+        
+        if ($(this).attr('class') === 'html'){
+            html.splice(rowToDelete, 1);
+            
         }
-        else {
-            // remove line from view
-            $(this).remove();
+        else if ($(this).attr('class') === 'css'){
+            css.splice(rowToDelete, 1);
+
+        }
+        else if ($(this).attr('class') === 'js'){
+            js.splice(rowToDelete, 1);
         }
 
-        // remove from array
+        wrap();
     }
 
 
