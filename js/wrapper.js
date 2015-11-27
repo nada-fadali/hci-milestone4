@@ -88,23 +88,41 @@ $(document).on('keyup', 'input[type="text"]', function(ele) {
         wrap();
     }
 
-    // else if delete key is pressed and this element is empty and not first line, delete it
-    else if (ele.keyCode === 8 && $(this).val().length === 0){
+    // else if delete key is pressed 
+    else if (ele.keyCode === 8){
         var rowToDelete = parseInt($(this).parent().attr('id').substr(1));
         
-        if ($(this).attr('class') === 'html'){
-            html.splice(rowToDelete, 1);
-            
-        }
-        else if ($(this).attr('class') === 'css'){
-            css.splice(rowToDelete, 1);
+        // if line is empty delete it
+        if ($(this).val().length === 0){
+            if ($(this).attr('class') === 'html'){
+                html.splice(rowToDelete, 1);
+            }
+            else if ($(this).attr('class') === 'css'){
+                css.splice(rowToDelete, 1);
 
-        }
-        else if ($(this).attr('class') === 'js'){
-            js.splice(rowToDelete, 1);
-        }
+            }
+            else if ($(this).attr('class') === 'js'){
+                js.splice(rowToDelete, 1);
+            }
 
-        wrap();
+            wrap();
+        }
+        // edit line width
+        else{
+            var inputWidth =  $(this).val().length / 2 + 0.85;
+            $(this).css("width", inputWidth+"em");
+
+            // update value in the array
+            if ($(this).attr('class') === 'html'){
+                html[rowToDelete] = $(this).val();
+            }
+            else if ($(this).attr('class') === 'css'){
+                css[rowToDelete] = $(this).val();
+            }
+            else if ($(this).attr('class') === 'js'){
+                js[rowToDelete] = $(this).val();
+            }
+        }
     }
 
 
