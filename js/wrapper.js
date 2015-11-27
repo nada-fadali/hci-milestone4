@@ -38,36 +38,68 @@ var js = [
     'console.log(x+y)'
 ];
 
-// console.log($('#r1').length); // == 0 doesn't exists
-
-var htmlBg = '#62A3EE',
-    cssBg =  '#FF73B1', //FFC361
-    jsBg = '#64AD82';
-
-
 for (var i = 0; i < html.length; i++) {
-    $('#wrapper').append($("<div>", {class: "row", id:"r"+i}));
-        
-    console.log(html[i].length);
 
     var inputWidth = html[i].length / 2 + 0.85; 
-    var input = '<input type="text" value="' + html[i] 
-                + '" style = "width: ' + inputWidth 
-                + 'em; background-color: ' + htmlBg + '">';
+    var input = '<input type="text" class="html" value="' + html[i] 
+                + '" style = "width: ' + inputWidth + 'em;">';
 
     if (i < css.length) {
         inputWidth = css[i].length / 2 + 0.85;
-        input += '<input type="text" value="' + css[i] 
-                + '" style = "width: ' + inputWidth 
-                + 'em; background-color: ' + cssBg + '">';
+        input += '<input type="text" class="css" value="' + css[i] 
+                + '" style = "width: ' + inputWidth + 'em;">';
     };
 
     if (i < js.length) {
         inputWidth = js[i].length / 2 + 0.85;
-        input += '<input type="text" value="' + js[i] 
-                + '" style = "width: ' + inputWidth 
-                + 'em; background-color: ' + jsBg + '">';
+        input += '<input type="text" class="js" value="' + js[i] 
+                + '" style = "width: ' + inputWidth + 'em;">';
     };
-    
+
+    $('#wrapper').append($("<div>", {class: "row", id:"r"+i}));
     $('#r'+i).append(input);
 };  
+
+
+$(document).on('keyup', 'input[type="text"]', function(ele) {
+    
+    // if enter key is pressed
+    // create input element below this one
+    if (ele.keyCode === 13){
+
+    }
+
+    // else if delete key is pressed and this element is empty and not first line, delete it
+    else if (ele.keyCode === 8 && $(this).val().length === 0 && $(this).parent().attr('id') !== 'r0'){
+
+        // if the row is empty, adjust rows numbering
+        if ($(this).parent().children().length === 1){
+            var rowToDeleteIndex = $(this).parent().attr('id').substr(1);
+            var nextLines = $(this).parent().nextAll();
+
+            for (var i = 0; i < nextLines.length; i++) {
+                $(nextLines[i]).attr('id', 'r'+rowToDeleteIndex++);
+            };
+
+            $(this).parent().remove();
+        }
+        else {
+            // remove line from view
+            $(this).remove();
+        }
+
+        // remove from array
+    }
+
+
+    // else rewrap current line
+    else{
+        // update length
+        var inputWidth =  $(this).val().length / 2 + 0.85;
+        $(this).css("width", inputWidth+"em");
+
+        // update value in the array
+    }
+});
+
+// console.log($('#r1').length); // == 0 doesn't exists
